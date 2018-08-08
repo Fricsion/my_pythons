@@ -1,4 +1,17 @@
-var noun = {
-		{
-				
+{
+		"I":{
+				"type": "personla_pronoun",
+				"usage": "subject"
+		},
+		"am":{
+				"type": "be",
+				"usage": "verb"
+		},
+		"human":{
+				"type": "noun",
+				"usage": ["subject", "object"] 
+		}
+
+}
+
 
