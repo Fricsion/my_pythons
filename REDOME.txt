@@ -1,1 +1,12 @@
 Python --version -> 3.5.4
+
+Pygame --version -> 1.9.4
+
+
+Project details
+
+- talk_sys
+	Auto sentences maker (developing)
+
+- fes_game
+	Game that is made for School festival (developing)
