@@ -9,20 +9,25 @@ screen = pygame.display.set_mode((400, 300))
 
 pygame.display.set_caption("DarkSouls")
 
-img = pygame.image.load("images/earth.png")
-
-pos = [10, 10]
-
+pos = [20, 20]
 
 def main():
     
     while True:
 
         # Processor ----------------
-        rect = img.get_rect()
-        rect.center = pos
+        
+        pressed_key = pygame.key.get_pressed()
+        if pressed_key[K_LEFT]:
+            pos[0] -= 5
+        if pressed_key[K_RIGHT]:
+            pos[0] += 5
+        if pressed_key[K_UP]:
+            pos[1] -= 5
+        if pressed_key[K_DOWN]:
+            pos[1] += 5
 
-        pygame.transform.scale(img, (20, 20))
+   
 
 
         # Rendering ----------------
@@ -30,8 +35,11 @@ def main():
 
         screen.fill((0, 0, 0))
 
-        screen.blit(img, rect)
+        pygame.draw.circle(screen, (255, 255, 255), (pos[0], pos[1]), 10)
+
+
         pygame.display.update()
+
 
 
         # Relating input ----------------
@@ -41,6 +49,21 @@ def main():
                 pygame.quit()
 
                 sys.exit
+
+            elif event.type == KEYDOWN:
+                if event.key == K_ESCAPE:
+                    pygame.quit()
+                    sys.exit()
+#                if event.key == K_LEFT:
+#                    pos[0] -= 5
+#                elif event.key == K_RIGHT:
+#                    pos[0] += 5
+#                elif event.key == K_UP:
+#                    pos[1] -= 5
+#                elif event.key == K_DOWN:
+#                    pos[1] += 5
+
+
     
 if __name__ == '__main__':
     main()
