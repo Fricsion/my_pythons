@@ -15,36 +15,32 @@ pygame.display.set_caption("DarkSouls")
 
 class Player(pygame.sprite.Sprite):
 
-    def __init__(self, radius, pos):
+    def __init__(self, filename, x, y, ):
+
+        self.mine = pygame.image.load(filename).convert_alpha()
+        width = self.image.get_width()
+        height = self.image.get_height()
+
+        self.rect = Rect(x, y, width, height)
 
 
-        self.radius = radius
-        self.pos = pos
-        
 
-        
+    def draw(self):
+
+        pygame.draw.circle(screen, self.color, self.mine)
+
     def move(self):
- 
         pressed_key = pygame.key.get_pressed()
         if pressed_key[K_LEFT]:
-            self.pos[0] -= 5
-#            self.mine.move_ip(-5, 0)        
+            self.mine.move_ip(-5, 0)        
         if pressed_key[K_RIGHT]:
-            self.pos[0] += 5
-#            self.mine.move_ip(5, 0)
+            self.mine.move_ip(5, 0)
         if pressed_key[K_UP]:
-            self.pos[1] -= 5
-#            self.mine.move_ip(0, -5)
+            self.mine.move_ip(0, -5)
         if pressed_key[K_DOWN]:
-            self.pos[1] += 5
-#            self.mine.move_ip(0, 5)
-
+            self.mine.move_ip(0, 5)
 
     
-    def draw(self):
-        
-        pygame.draw.circle(screen, (255, 255, 255), (self.pos[0], self.pos[1]), self.radius)
-#        player_layer.fill((0, 0, 0))
 
 
 
@@ -52,7 +48,7 @@ class Player(pygame.sprite.Sprite):
 
 def main():
     
-    player = Player(10, [200, 150])
+    player = Player('image/earth.png', 20, 20)
 
 
 
