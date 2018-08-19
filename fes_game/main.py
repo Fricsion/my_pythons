@@ -12,15 +12,19 @@ screen = pygame.display.set_mode(WINDOW_SIZE)
 #player_layer = pygame.display.set_mode((20, 20))
 
 pygame.display.set_caption("DarkSouls")
-    
+ 
+def load_image(filename, width, height):
+    image = pygame.image.load(filename).convert_alpha()
+    image = pygame.transform.scale(image, (width, height))
+    return image
+
+   
 class Player:
     def __init__(self, filename, x, y):
         
-        self.my_combat = pygame.image.load(filename).convert_alpha()
-        self.my_combat = pygame.transform.scale(self.my_combat, (20, 20))
+        self.my_combat = load_image(filename, 20, 20)
         width = self.my_combat.get_width()
         height = self.my_combat.get_height()
-        print(width, height)
         self.rect = Rect(x, y, width, height)
 
     def draw(self, screen):
@@ -40,10 +44,19 @@ class Player:
             self.rect.move_ip(0, 5)
 
 
+class Barrage:
+    def __init__(self, filename, width, height):
+        
+        self.barrage = pygame.image.load(filename).convert_alpha()
+        self.barrage = pygame.transform.scale(self.barrage, (width, height))
 
+
+class Button:
+    def __init__(self, filename, x, y):
+        
+        self.button
 
         
-
 def main():
     
     player = Player("images/heart.png", 20, 20)
