@@ -17,8 +17,10 @@ class Player:
     def __init__(self, filename, x, y):
         
         self.my_combat = pygame.image.load(filename).convert_alpha()
+        self.my_combat = pygame.transform.scale(self.my_combat, (20, 20))
         width = self.my_combat.get_width()
         height = self.my_combat.get_height()
+        print(width, height)
         self.rect = Rect(x, y, width, height)
 
     def draw(self, screen):
