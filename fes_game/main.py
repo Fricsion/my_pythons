@@ -47,17 +47,24 @@ class Player:
 class Barrage:
     def __init__(self, filename, width, height):
         
-        self.barrage = pygame.image.load(filename).convert_alpha()
-        self.barrage = pygame.transform.scale(self.barrage, (width, height))
-
+        self.barrage = load_image(filename, width, height) 
 
 class Button:
-    def __init__(self, filename, x, y):
+    def __init__(self, filename, x, y, width, height):
         
-        self.button
+        self.button = load_image(filename, width, height)
+
+        self.rect = Rect(x, y, width, height)
+
+    def draw(self):
+
+        self.blit(self.button, self.rect)
 
         
 def main():
+
+    game_status = 0
+    # ステータス、０：タイトル。
     
     player = Player("images/heart.png", 20, 20)
 
