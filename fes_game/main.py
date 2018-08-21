@@ -27,6 +27,7 @@ class Player:
         height = self.my_combat.get_height()
         self.rect = Rect(x, y, width, height)
 
+
     def draw(self, screen):
 
         screen.blit(self.my_combat, self.rect)
@@ -55,18 +56,21 @@ class Button:
         self.button = load_image(filename, width, height)
 
         self.rect = Rect(x, y, width, height)
-
-    def draw(self):
-
-        self.blit(self.button, self.rect)
-
+#
+#    def responce(self):
+#
+#
+#    def draw(self):
+#
+#        self.blit(self.button, self.rect)
+#
         
 def main():
 
     game_status = 0
     # ステータス、０：タイトル。
     
-    player = Player("images/heart.png", 20, 20)
+    player = Player("images/heart.png", 200, 150)
 
 
 
