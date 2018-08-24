@@ -1,5 +1,6 @@
 #_*_coding:utf-8_*_
 import sys
+import random
 import pygame
 from pygame.locals import *
 
@@ -46,9 +47,31 @@ class Player:
 
 
 class Barrage:
-    def __init__(self, filename, width, height):
+    def __init__(self, filename, x, y, width, height):
         
+        pygame.sprite.Sprite.__init__(self, self.containers)
         self.barrage = load_image(filename, width, height) 
+
+        self.rect = Rect(x, y, width, height)
+
+    def update(self):
+
+        direct = random.randint(0, 3)
+
+        if direct == 0:
+            self.rect.move_ip(-5, 0)
+        if direct == 1:
+            self.rect.move_ip(5, 0)
+        if direct == 2:
+            self.rect.move_ip(0, -5)
+        if direct == 3:
+            self.rect.move_ip(0, 5)
+
+
+
+#    def draw(self, screen):
+#
+#        screen.blit(self.barrage, self.rect)
 
 class Button:
     def __init__(self, filename, x, y, width, height):
@@ -56,14 +79,13 @@ class Button:
         self.button = load_image(filename, width, height)
 
         self.rect = Rect(x, y, width, height)
-#
-#    def responce(self):
-#
-#
-#    def draw(self):
-#
-#        self.blit(self.button, self.rect)
-#
+
+
+
+    def draw(self):
+
+        self.blit(self.button, self.rect)
+
         
 def main():
 
@@ -72,14 +94,20 @@ def main():
     
     player = Player("images/heart.png", 200, 150)
 
-
+    bar1 = Barrage("images/asteroid1.png", 20, 75, 50, 50) 
+    bar2 = Barrage("images/asteroid2.png", 380, 75, 50, 50) 
+    bars = pygame.sprite.RenderUpdates()
+    Barrage.containers = bars
+   
 
     while True:
 
         # 処理関連 ----------------
  
         player.move()
-
+#        bar1.move()
+#        bar2.move()
+        bars.update()
 
         # 描画関連 ----------------
 
@@ -87,6 +115,9 @@ def main():
         screen.fill((0, 0, 0))
 
         player.draw(screen)
+#        bar1.draw(screen)
+#        bar2.draw(screen)
+        bars.draw(screen)
 
         pygame.display.update()
 
