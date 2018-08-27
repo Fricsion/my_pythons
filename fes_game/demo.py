@@ -11,6 +11,30 @@ def load_image(filename, width, height):
     image = pygame.transform.scale(image, (width, height))
     return image
 
+class Player(pygame.sprite.Sprite):
+    def __init__(self, filename, x, y, width, height):
+        pygame.sprite.Sprite.__init__(self)
+        self.combat = load_image(filename, width, height)
+        width = self.combat.get_width()
+        height = self.combat.get_height()
+        self.rect = Rect(x, y, width, height)
+
+    def move(self):
+
+        pressed_key = pygame.key.get_pressed()
+        if pressed_key[K_LEFT]:
+            self.rect.move_ip(-5, 0)
+        if pressed_key[K_RIGHT]:
+            self.rect.move_ip(5, 0)
+        if pressed_key[K_UP]:
+            self.rect.move_ip(0, -5)
+        if pressed_key[K_DOWN]:
+            self.rect.move_ip(0, 5)
+
+    def draw(self, screen):
+        screen.blit(self.combat, self.rect)
+
+
 class Barrage(pygame.sprite.Sprite):
     def __init__(self, filename, x, y, vx, vy, width, height):
         # デフォルトグループをセット
@@ -36,10 +60,12 @@ def main():
     pygame.init()
     screen = pygame.display.set_mode(SCR_RECT.size)
     pygame.display.set_caption(u"Undertale")
+
+    player = Player("images/heart.png", 200, 150, 20, 20)
     
     # スプライトグループを作成してスプライトクラスに割り当て
-    group = pygame.sprite.RenderUpdates()
-    Barrage.containers = group
+    bars = pygame.sprite.RenderUpdates()
+    Barrage.containers = bars 
     
     # スプライトを作成
     bar1 = Barrage("images/asteroid1.png", 0, 0, 2, 2, 30, 30)
@@ -51,10 +77,23 @@ def main():
     while True:
         clock.tick(60)  # 60fps
         screen.fill((0,0,0))
-        # スプライトグループを更新
-        group.update()
-        # スプライトグループを描画
-        group.draw(screen)
+
+
+
+        #プレイヤー移動＆描画
+        player.move()
+        player.draw(screen)
+
+        # スプライトグループを更新＆描画
+        bars.update()
+        bars.draw(screen)
+
+        #当たり判定
+        bar_collision = pygame.sprite.spritecollide(player, bars, True)
+        if bar_collision:
+            player.kill()
+
+
         pygame.display.update()
         for event in pygame.event.get():
             if event.type == QUIT:
