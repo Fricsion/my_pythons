@@ -18,19 +18,30 @@ class Player(pygame.sprite.Sprite):
         width = self.combat.get_width()
         height = self.combat.get_height()
         self.rect = Rect(x, y, width, height)
-        self.radius = width/2 # 円の当たり判定で使うゾ
+        self.radius = width/3 # 円の当たり判定で使うゾ
 
     def move(self):
 
         pressed_key = pygame.key.get_pressed()
-        if pressed_key[K_LEFT]:
-            self.rect.move_ip(-5, 0)
-        if pressed_key[K_RIGHT]:
-            self.rect.move_ip(5, 0)
-        if pressed_key[K_UP]:
-            self.rect.move_ip(0, -5)
-        if pressed_key[K_DOWN]:
-            self.rect.move_ip(0, 5)
+        if pressed_key[K_LSHIFT]:
+            if pressed_key[K_LEFT]:
+                self.rect.move_ip(-2, 0)
+            if pressed_key[K_RIGHT]:
+                self.rect.move_ip(2, 0)
+            if pressed_key[K_UP]:
+                self.rect.move_ip(0, -2)
+            if pressed_key[K_DOWN]:
+                self.rect.move_ip(0, 2)
+        else:
+
+            if pressed_key[K_LEFT]:
+                self.rect.move_ip(-5, 0)
+            if pressed_key[K_RIGHT]:
+                self.rect.move_ip(5, 0)
+            if pressed_key[K_UP]:
+                self.rect.move_ip(0, -5)
+            if pressed_key[K_DOWN]:
+                self.rect.move_ip(0, 5)
 
     def draw(self, screen):
         screen.blit(self.combat, self.rect)
@@ -46,7 +57,7 @@ class Barrage(pygame.sprite.Sprite):
         self.rect = Rect(x, y, width, height)
         self.vx = vx
         self.vy = vy
-        self.radius = width/2   # 円の当たり判定で使うゾ
+        self.radius = width/3   # 円の当たり判定で使うゾ
     
     def update(self):
         self.rect.move_ip(self.vx, self.vy)
@@ -57,6 +68,14 @@ class Barrage(pygame.sprite.Sprite):
             self.vy = -self.vy
         # 画面からはみ出ないようにする
         self.rect = self.rect.clamp(SCR_RECT)
+
+class Button(pygame.sprite.Sprite):
+    def __init__(self, filename, width, height, x, y):
+        self.button = load_image(filename, width, height)
+        self.rect = Rect(x, y, width, height)
+
+    def draw(self, screen):
+        screen.blit(self.button, self.rect)
 
 def main():
     pygame.init()
