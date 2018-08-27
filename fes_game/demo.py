@@ -18,6 +18,7 @@ class Player(pygame.sprite.Sprite):
         width = self.combat.get_width()
         height = self.combat.get_height()
         self.rect = Rect(x, y, width, height)
+        self.radius = width/2 # 円の当たり判定で使うゾ
 
     def move(self):
 
@@ -45,6 +46,7 @@ class Barrage(pygame.sprite.Sprite):
         self.rect = Rect(x, y, width, height)
         self.vx = vx
         self.vy = vy
+        self.radius = width/2   # 円の当たり判定で使うゾ
     
     def update(self):
         self.rect.move_ip(self.vx, self.vy)
@@ -60,6 +62,9 @@ def main():
     pygame.init()
     screen = pygame.display.set_mode(SCR_RECT.size)
     pygame.display.set_caption(u"Undertale")
+
+    game_status = 0
+    #ステータス、０：メインメニュー、１：ゲームメニュー、２、ゲームオーバー画面
 
     player = Player("images/heart.png", 200, 150, 20, 20)
     
@@ -89,9 +94,10 @@ def main():
         bars.draw(screen)
 
         #当たり判定
-        bar_collision = pygame.sprite.spritecollide(player, bars, True)
+        bar_collision = pygame.sprite.spritecollide(player, bars, True, pygame.sprite.collide_circle)
         if bar_collision:
             player.kill()
+            
 
 
         pygame.display.update()
